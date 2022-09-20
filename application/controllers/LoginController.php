@@ -58,7 +58,7 @@ class LoginController extends HexaController
 			$roles = (int)$this->session->user_session->roles;
 
 			if($roles==1 ||  $roles ==2){
-				redirect("/ProductionSchedule");
+				redirect("/admin/view_departments");
 			}
 			if($roles==3){
 				redirect("/materialSupply");

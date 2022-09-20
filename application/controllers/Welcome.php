@@ -35,4 +35,8 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view("Form_Show/process_configuration",array("title"=>"Department","productID"=>$productID));
 	}
+
+	public function Dashboard(){
+		$this->load->view('Dashboard',array('title' => 'Dashboard'));
+	}
 }

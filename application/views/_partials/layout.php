@@ -65,10 +65,11 @@ $username = $this->session->user_session->name;
 
 			</form>
 			<ul class="navbar-nav navbar-right">
-				<li><a class="nav-link nav-link-lg nav-link-user" onclick="loadAnotherDomain('<?php echo $this->session->user_session->user_name ?>','<?php echo $this->session->user_session->password ?>',
+				<!-- <li><a class="nav-link nav-link-lg nav-link-user" onclick="loadAnotherDomain('<?php echo $this->session->user_session->user_name ?>','<?php echo $this->session->user_session->password ?>',
 							'<?php echo base_url() ?>','<?php echo $this->session->user_session->company_id ?>','<?php echo $this->session->user_session->id ?>')" style="cursor: pointer;color: white;">
 						<div class="d-sm-none d-lg-inline-block">Board</div>
 					</a></li>
+					-->
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"
 										class="nav-link dropdown-toggle nav-link-lg nav-link-user">
