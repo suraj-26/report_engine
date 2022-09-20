@@ -1,0 +1,46 @@
+
+/*.main-sidebar {
+    
+    width: 100%!important;
+}*/
+.menu-header_section li a
+{
+	 color: white!important;
+}
+.main-sidebar .sidebar-menu li a {
+   
+    display: contents!important;
+    color: black;
+    font-weight: bold;
+}
+
+.menu-header_section
+{
+	background: #891635 !important;
+	color: white !important;
+	padding: 5px 0px 5px 0px !important;
+}
+.menu-header_section1
+{
+	background: #bbb8b9 !important;
+	color: black !important;
+	padding: 5px 0px 5px 0px !important;
+	font-weight: bold;
+}
+.card-primary
+{
+	border-top: 2px solid #891635 !important;
+}
+.section-header
+{
+	color:#891635!important;
+}
+.btn-mybutton
+{
+	background: #891635!important;
+	color: white!important;
+}
+.list_ang
+{
+text-decoration: none;
+}
