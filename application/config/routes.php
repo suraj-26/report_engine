@@ -139,6 +139,15 @@ $route["getEditFormData"]="DatatableEditorController/getEditFormData";
 $route["getOnchangeDependantData"]="DatatableEditorController/getOnchangeDependantData";
 $route["getDataTableTemplate"]="DatatableEditorController/getDataTableTemplate";
 
+$route['getTableColumn'] = "TemplateConfiguration/getTableColumn";
+$route["getAllTablesList"]="DatatableEditorController/getAllTablesList";
+
+$route['getOptions'] = "TemplateConfiguration/getOptions";
+$route['saveAddMore'] = "TemplateConfiguration/saveAddMore";
+$route['UpdateAddMore'] = "TemplateConfiguration/UpdateAddMore";
+
+$route['removeAddmoreRows'] = "TemplateConfiguration/removeAddmoreRows";
+
 
 ///REPORT ENGINE
 
@@ -180,3 +189,4 @@ $route['getBMRParamData']='WordReportController/getBMRParamData';
 $route['getQueryParamData']='WordReportController/getQueryParamData';
 $route['getGroupsList']='WordReportController/getGroupsList';
 $route['getAwsLinkToDownload']='WordReportController/getAwsLinkToDownload';
+$route['ChildGroup']='WordReportController/ChildGroup';

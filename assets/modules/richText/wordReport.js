@@ -1,36 +1,10 @@
 let BMR_obj;
 let KP = [];
 $(document).ready(function () {
-	// $('#summernote').summernote({
-	// 	placeholder: 'Hello stand alone ui',
-	// 	tabsize: 2,
-	// 	height: 100,
-	// 	toolbar: [
-	// 		['style', ['style']],
-	// 		['font', ['bold', 'underline', 'clear']],
-	// 		['color', ['color']],
-	// 		['para', ['ul', 'ol', 'paragraph']],
-	// 		['table', ['table']],
-	// 		['insert', ['link', 'picture', 'video']],
-	// 		['view', ['fullscreen', 'codeview', 'help']]
-	// 	],
-	// 	disableResizeEditor:false
-	// });
-
 	getUserProfiles();
 	getKeyPairs();
 	getPagesList();
 	getGroupsList();
-	// let bmr_no = $("#bmr_no").val();
-	// let production_id = $("#production_id").val();
-
-	// BMR_obj = {
-	// 	"bmr_no": bmr_no,
-	// 	"production_id": production_id,
-	// 	"pages": []
-	// }
-	// console.log(BMR_obj.pages);
-
 });
 var editor1 = new RichTextEditor("#summernote");
 let currentInput = document.getElementById('summernote');
@@ -38,7 +12,6 @@ $(document).on('focus', 'textarea', function () {
 	currentInput = this;
 })
 
-// let counter = 1;
 let keys = [];
 let staticArr = [];
 
@@ -68,46 +41,22 @@ function setTextBoxCode(type, inputName = '') {
 			break;
 	}
 	let elementTag = '<span class="inputfiled" style="background-color: rgb(255, 255, 0);">' + eleV + '</span>';
-// 	eleV='<span class="inputText">'+eleV+'</span>';
-// 	$('#summernote').RichTextEditor('editor.saveRange');
-// 	$('#summernote').RichTextEditor('editor.restoreRange');
-// 	$('#summernote').RichTextEditor('editor.focus');
-// 	$('#summernote').RichTextEditor('pasteHTML', eleV);
-// 	let cursorPos = currentInput.selectionStart;
-// 	let v = currentInput.value;
-// 	let textBefore = v.substring(0,  cursorPos );
-// 	let textAfter  = v.substring( cursorPos, v.length );
-// 	currentInput.val( textBefore+ 'aaaaa' +textAfter );
-
-	// let cursorPos = currentInput.selectionStart;
-	// let v = currentInput.value;
-	// let textBefore = v.substring(0,  cursorPos );
-	// let textAfter  = v.substring( cursorPos, v.length );
-	// editor1.setHTMLCode(textBefore + eleV + textAfter);
-	//
-	// cursorPos += eleV.length;
-	// editor1.focus();
-	// editor1.setSelectionRange(cursorPos, cursorPos);
-
 
 	editor1.insertHTML(elementTag)
 	editor1.collapse(false);
 	editor1.focus();
-
-
 	keys.push(eleV);
 	getKeyPairs();
 	if (type == 3) {
 		staticArr.push(eleV);
 	}
-	// counter++;
 }
 
 function saveHtml() {
 
 	let page_name = $("#section_name").val();
 	let page_id = $("#page_id").val();
-	let page_type = $('#page_type').val();
+	let page_type = 2;
 	let page_id_count = $('#page_id_count').val();
 	let bmr_no = $("#bmr_no").val();
 	let p_id = parseInt(page_id);
@@ -198,7 +147,6 @@ function saveHtml() {
 let hosController;
 let userProfiles;
 let users;
-let SystemCols;
 let grouplist;
 let pageslist;
 let labellist;
@@ -210,8 +158,6 @@ function handson(data, columnsS, hiddenColumn) {
 			['', '', '', '', ''], '',
 		];
 	}
-
-
 	const container = document.getElementById('keyPairsDiv');
 	hosController != null ? hosController.destroy() : "";
 	hosController = new Handsontable(container, {
@@ -302,7 +248,6 @@ function getKeyPairs(type = null) {
 	let data = [];
 	if (KP.length > 0) {
 		data = KP;
-
 	}
 
 	if (type !== 1) {
@@ -319,7 +264,6 @@ function getKeyPairs(type = null) {
 				});
 				KP = data;
 			}
-
 		} else {
 			data = ['', '', '', '', '', '', '',''];
 		}
@@ -412,8 +356,6 @@ function getPageDataToEditor(id, page_id) {
 
 
 function setPageEditorData(htmlCode, keys_arr, keyPairs, staticFields, tablename, is_config) {
-	// htmlCode=JSON.parse(htmlCode);
-	// htmlCode=htmlCode[0];
 
 	if (htmlCode != "" && htmlCode != null) {
 		keys = keys_arr;
@@ -425,7 +367,6 @@ function setPageEditorData(htmlCode, keys_arr, keyPairs, staticFields, tablename
 			$('#is_config').prop('checked', true);
 		} else {
 			$('#is_config').prop('checked', false);
-
 		}
 
 		$("#alltablename").append(tablename);
@@ -482,77 +423,7 @@ function addNewPage() {
 		{type: 'dropdown', source: labellist}
 	];
 	handson(['', '', '', '', '', '', '', '', '',''], columns, []);
-	// getKeyPairs();
 	getGroupsList();
-}
-
-function addMaterial() {
-	let bmr_id = $("#bmr_id").val();
-	var formData = new FormData();
-	formData.set('bmr_id', bmr_id);
-
-	app.request("checkBMRId", formData).then(result => {
-		// app.successToast(result.body);
-		if (result.status === 200) {
-			$("#addmaterialmodal").modal('show');
-
-			$("#material_update_id").val(result.data);
-			let product_id = result.data;
-
-			// $('#addmaterialmodal').on('shown.bs.modal', function (event) {
-			getUnits(1);
-			if (product_id != '' && product_id != null) {
-				$("#material_count").val(0);
-				materialArray = [0];
-				getMaterialDetails(product_id);
-			}
-			// })
-		} else {
-			$("#addmaterialmodal").modal('hide');
-			app.errorToast('Product Not Available For this BMR');
-		}
-
-	}).catch(error => console.log(error));
-}
-
-function addProcess() {
-	let bmr_id = $("#bmr_id").val();
-	var formData = new FormData();
-	formData.set('bmr_id', bmr_id);
-
-	app.request("checkBMRId", formData).then(result => {
-
-		if (result.status === 200) {
-			$("#addprocessmodal").modal('show');
-
-			$("#process_update_id").val(result.data);
-			let product_id = result.data;
-
-			if (product_id != '' && product_id != null) {
-				$("#PROCESS_PLAN").empty();
-				getProcessDetails(product_id);
-
-			}
-		} else {
-			$("#addprocessmodal").modal('hide');
-			app.errorToast('Product Not Available For this BMR');
-		}
-
-	}).catch(error => console.log(error));
-}
-
-function getTableName(id) {
-	$("#table_name").val(id);
-	let formdata = new FormData();
-	formdata.set('id', id);
-	app.request("getTableColumns", formdata).then(res => {
-		if (res.status === 200) {
-			SystemCols = res.data;
-			getKeyPairs()
-		} else {
-			SystemCols = res.data;
-		}
-	}).catch(error => console.log(error));
 }
 
 function setTextBoxInput(inputName) {

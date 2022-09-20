@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>assets/modules/izitoast/js/iziToast.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/modules/jquery-validation/js/jquery.validate.min.js"
 		type="text/javascript"></script>
-		
+
 
 
 <script src="<?php echo base_url(); ?>assets/js/custom.js" type="text/javascript"></script>
@@ -68,7 +68,7 @@ if ($this->uri->segment(1) == "viewForm" || $this->uri->segment(1) == "form_view
 		|| $this->uri->segment(1) == 'ProductionSchedule' || $this->uri->segment(1) == 'material_process') { ?>
 	<script src="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-	
+
 
     <script src="<?= base_url() ?>assets/modules/jquery-validation/js/jquery.validate.min.js"></script>
 	<script src="<?= base_url() ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
@@ -130,18 +130,12 @@ if($this->uri->segment(1) == "materialOrder"){ ?>
 
 	<script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js" crossorigin="anonymous"
 			referrerpolicy="no-referrer"></script>
-			
 	<script src="<?= base_url(); ?>assets/modules/richText/wordReport.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/pageConfiguration/page-creation.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/pages/product.js"></script>
-
-	
-	
-	
 <?php } ?>
 <?php  if ($this->uri->segment(1) == "bmr_report_view") { ?>
 	<script src="<?= base_url(); ?>assets/modules/richText/wordReportCreation.js"></script>
-	
+
 <?php } ?>
 <?php  if ($this->uri->segment(1) == "view_product") { ?>
 	<script src="<?= base_url(); ?>assets/modules/richText/wordReportCreation.js"></script>

@@ -895,13 +895,14 @@
 								<div class="col-12">
 
 									<input type="hidden" name="bmr_update_id" id="bmr_update_id">
+									<input type="hidden" name="group_type" id="group_type">
 									<div class="form-group" id="bmr-list">
-										<label for="">BMR List</label>
+										<label for="">Group List</label>
 										<select name="bmr_list" id="bmr_list" class="form-control select2"
 												onchange="getBMRNameList(this.value)"></select>
 									</div>
 									<div class="form-group">
-										<label>BMR Name</label>
+										<label>Group Name</label>
 										<input type="text" name="bmr_name" class="form-control" id="bmr_name">
 									</div>
 								</div>

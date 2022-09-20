@@ -5,8 +5,6 @@ $(document).ready(function () {
 });
 
 function getReportData() {
-	// $("#pagesList").html('');
-	// $("#bmr_pages").html('');
 	let report_id = $("#report_id").val();
 	let type = $("#type").val();
 	let formdata = new FormData();
@@ -22,8 +20,9 @@ function getReportData() {
 let pageContent = null;
 
 function showPagesList(data) {
+	$("#pagesList").html('');
+	$("#bmr_pages").html('');
 	let pagesData = JSON.parse(data);
-
 	pagesData = pagesData[0].pages;
 	pageContent = pagesData;
 	pagesData.map((e, i) => {
@@ -50,39 +49,27 @@ async function showPage(indexId, pageId) {
 			}
 			if (object) {
 				let page = object;
-				let pageInput = await changeInputTextToHTML(page.keyPairs, page.dataset, page.keys,page.page_id,page.page_type,page.staticFields);
+				let pageInput = await changeInputTextToHTML(page.keyPairs, page.dataset, page.keys, page.page_id, page.page_type, page.staticFields);
 				let pageCode = page.html_code;
 
 
 				if (pageInput.length > 0) {
 					pageInput.map((rInp, ind) => {
-
 						let replacekey = `<span class="inputfiled" style="background-color: rgb(255, 255, 0);">${rInp.key}</span>`;
-
-						// console.log(replacekey);
-						// let replacekey=rInp.key;
-						// pageCode = pageCode.replace('<span style="background-color: rgb(255, 255, 0);">', rInp.html);
-
-						// pageCode = pageCode.replace('</span>', rInp.html);
 						pageCode = pageCode.replace(replacekey, rInp.html);
-
-
 					});
-
 				}
 				$("#report_page").html(pageCode);
 				$("#page_id").val(pageId);
 				$("#page_input").val(page.keys);
 				$("#pageName").html(page.page_name);
 				$("#bmr_pages").html('');
-
-
 			}
 		}
 	}
 }
 
-async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2,static_field=null) {
+async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type = 2, static_field = null) {
 	let user_id = $("#user_id").val();
 	let usertype = $("#type").val();
 	let keyPairValue = getInputFilledValue(dataset, keys);
@@ -93,7 +80,6 @@ async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2
 
 		return Promise.all(keyPairs.map(async (inp, index, arr) => {
 			let options = '';
-
 			let onchange = '';
 			if (inp.length > 3) {
 				if (inp[1] != '' && inp[1] != null) {
@@ -105,19 +91,19 @@ async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2
 					}
 
 					if (inp[7] != null && inp[7] != '' && inp[7] !== 'none') {
-						inputValue = await getPageLabelDataShow(inp[7], inp[8],inp[9]);
+						inputValue = await getPageLabelDataShow(inp[7], inp[8], inp[9]);
 					}
 					if (usertype == 1) {
 						readOnly = '';
 					} else {
-						if(page_type == 1){
+						if (page_type == 1) {
 							readOnly = '';
-							if(static_field != null){
-								if(static_field.includes(inp[0])){
+							if (static_field != null) {
+								if (static_field.includes(inp[0])) {
 									readOnly = 'readonly';
 								}
 							}
-						}else{
+						} else {
 							if (inp[3] != '' && inp[3] != null) {
 								let accessUser = inp[3].split('-');
 								if (accessUser.length > 1) {
@@ -139,7 +125,7 @@ async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2
 						case "text":
 
 							if (inp[2].includes('select') && inp[2] !== '' && inp[2] !== null) {
-								inputValue = await getColumnNames(inp[2], inputValue,page_id, 1);
+								inputValue = await getColumnNames(inp[2], inputValue, page_id, 1);
 							}
 
 							if (inp[2].includes('#') && inp[2] !== '' && inp[2] !== null && !inp[2].includes('select')) {
@@ -182,16 +168,14 @@ async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2
 							});
 							break;
 						case "file":
-							let filesAng='';
-							let fileNames='';
-							if(inputValue!="" && inputValue!=null)
-							{
-								fileNames=await getAwsLinkToDownload(inputValue);
-								if(fileNames.length>0)
-								{
-									fileNames.map((e,index)=>{
+							let filesAng = '';
+							let fileNames = '';
+							if (inputValue != "" && inputValue != null) {
+								fileNames = await getAwsLinkToDownload(inputValue);
+								if (fileNames.length > 0) {
+									fileNames.map((e, index) => {
 										console.log(e);
-										filesAng+=`<a class="btn btn-link" href="${e.urlPath}" download><i class="fa fa-download"></i> ${e.filename}</a> `;
+										filesAng += `<a class="btn btn-link" href="${e.urlPath}" download><i class="fa fa-download"></i> ${e.filename}</a> `;
 									});
 								}
 							}
@@ -220,7 +204,6 @@ async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2
 									keyPairInputArr.push({"key": inp[0], "html": indentData});
 								}
 							}
-
 							break;
 						case "dropdown":
 							if (inp[2].includes('select')) {
@@ -243,7 +226,6 @@ async function changeInputTextToHTML(keyPairs, dataset, keys,page_id,page_type=2
 								"key": inp[0],
 								"html": `<select name="${inp[0]}" id="${inp[0]}" class="form-control">${options}</select>`
 							});
-
 							break;
 						case "calculated":
 							keyPairInputArr.push({
@@ -285,8 +267,6 @@ function getInputFilledValue(dataset, keys) {
 				for (let k in value) {
 					keyPairValue[k] = value[k].value;
 				}
-
-
 			});
 		});
 	}
@@ -374,7 +354,7 @@ function getProcessFlowChart() {
 	});
 }
 
-function getColumnNames(query, inputValue,page_id, type = null) {
+function getColumnNames(query, inputValue, page_id, type = null) {
 	return new Promise(function (resolve, reject) {
 		let params = $("#queryParameters").val();
 		let id = $("#report_id").val();
@@ -384,9 +364,9 @@ function getColumnNames(query, inputValue,page_id, type = null) {
 		formdata.set('inputValue', inputValue);
 		formdata.set('type', type);
 		formdata.set('params', params);
-		formdata.set('page_id',page_id);
-		formdata.set('id',id);
-		formdata.set('page_type',page_type);
+		formdata.set('page_id', page_id);
+		formdata.set('id', id);
+		formdata.set('page_type', page_type);
 		app.request("getColumnNames", formdata).then(res => {
 			if (res.status === 200) {
 
@@ -472,18 +452,18 @@ function getReportPageData() {
 	}).catch(error => console.log(error));
 }
 
-function getPageLabelDataShow(grouplist,pagelist, pagecontrol) {
-	return new Promise(function (resolve,reject) {
+function getPageLabelDataShow(grouplist, pagelist, pagecontrol) {
+	return new Promise(function (resolve, reject) {
 		let inputValue = '';
 		let datavalue = '';
 		let group = grouplist.split('-');
 		let group_id = group[0];
 		let type = $("#type").val();
 		let formdata = new FormData();
-		formdata.set('bmr_id',group_id);
-		formdata.set('type',type);
-		app.request("getReportPageData",formdata).then(res=>{
-			if(res.status === 200){
+		formdata.set('bmr_id', group_id);
+		formdata.set('type', type);
+		app.request("getReportPageData", formdata).then(res => {
+			if (res.status === 200) {
 				let pdata = res.body.code;
 				pdata = JSON.parse(pdata);
 				let pageCont = pdata[0].pages;
@@ -512,7 +492,7 @@ function getPageLabelDataShow(grouplist,pagelist, pagecontrol) {
 				});
 				resolve(datavalue);
 			}
-		}).catch(error=>console.log(error));
+		}).catch(error => console.log(error));
 	});
 }
 
@@ -545,6 +525,7 @@ function getParamValue(val) {
 	}
 	return paramsData[n];
 }
+
 function getAwsLinkToDownload(file) {
 	return new Promise(function (resolve, reject) {
 		let formdata = new FormData();

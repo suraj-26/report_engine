@@ -247,15 +247,6 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 getAllTablesNames();
 	$(document).ready(function () {
 		app.formValidation();
-		let product_id = $("#update_id").val();
-		if (product_id !== 0 && product_id != null && product_id != '') {
-
-			getMaterialDetails(product_id);
-
-		} else {
-
-			MaterialList(0);
-		}
 	});
 	function getAllTablesNames() {
 	app.request("getAllTablesNames", null).then(res => {

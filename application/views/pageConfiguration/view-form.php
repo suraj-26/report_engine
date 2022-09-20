@@ -39,44 +39,21 @@ $this->load->view('_partials/header');
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card">
-
-						<?php
-						if ($this->uri->segment(2) == '167') { ?>
+						<?php  if ($this->uri->segment(2) == '204') { ?>
 							<div class="row">
 								<div class="col-12 px-5 py-2">
-									<a class="btn btn-sm btn-primary float-right" style="color: white" href="<?=base_url()?>product/0" id="prodctPurchase" type="button">Create Product</a>
-									<a class="btn btn-sm btn-primary mr-2" style="color: white;display: none" href="<?=base_url()?>viewForm/167" id="purchaseHome" type="button"><i class="fa fa-arrow-left"></i>&nbsp;Home</a>
+									<input type="hidden" name="groupPageType" id="groupPageType" value="1">
+									<button class="btn btn-sm btn-primary mr-2" onclick="addBMR(null,1)" style="color: white;float: right" id="purchaseHome" type="button">Create BMR</button>
 								</div>
 							</div>
-
-							<?php } if ($this->uri->segment(2) == '177') { ?>
+						<?php } else if ($this->uri->segment(2) == '209') { ?>
 							<div class="row">
 								<div class="col-12 px-5 py-2">
-									<a class="btn btn-sm btn-primary mr-2" style="color: white;" href="<?=base_url()?>ProductionSchedule" id="purchaseHome" type="button"><i class="fa fa-arrow-left"></i>&nbsp;Home</a>
+									<input type="hidden" name="groupPageType" id="groupPageType" value="2">
+									<button class="btn btn-sm btn-primary mr-2" onclick="addBMR(null,2)" style="color: white;float: right" id="purchaseHome" type="button">Create BMR</button>
 								</div>
 							</div>
-
-						<?php } if ($this->uri->segment(2) == '204') { ?>
-							<div class="row">
-								<div class="col-12 px-5 py-2">
-									<button class="btn btn-sm btn-primary mr-2" onclick="addBMR()" style="color: white;float: right" id="purchaseHome" type="button">Create BMR</button>
-								</div>
-							</div>
-
-						<?php } else if ($this->uri->segment(2) == '162') {
-							$value = '';
-							if($this->uri->segment(2) == '162'){
-								$value = '167';
-							}
-							?>
-							<div class="row">
-								<div class="col-12 px-5 py-2">
-									<a class="btn btn-sm btn-primary mr-2" style="color: white;"
-									   href="<?= base_url() ?>viewForm/<?=$value?>" id="purchaseHome" type="button"><i
-												class="fa fa-arrow-left"></i>&nbsp;Home</a>
-								</div>
-							</div>
-						<?php } ?>
+						<?php }  ?>
 						<input type="hidden" name="template_id" id="template_id" value="<?php echo $template_id ?>">
 						<?php if (isset($session)) {
 							$id = $session->id;

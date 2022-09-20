@@ -66,6 +66,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<span>Engine 03</span>
 				</a>
 			</li>
+
+			<li class="<?php echo $this->uri->segment(2) == '209' ? 'active' : ''; ?>">
+				<a class="nav-link" href="<?php echo base_url(); ?>viewForm/209">
+					<i class="fas fa-users-cog"></i>
+					<span>Child Group</span>
+				</a>
+			</li>
 		</ul>
 	</aside>
 </div>

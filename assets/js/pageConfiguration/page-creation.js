@@ -3831,13 +3831,14 @@ function myDate(val) {
 
 }
 
-function addBMR(data = null) {
+function addBMR(data = null,type) {
 
 	$("#bmr_update_id").val('');
 	$("#bmr_name").val('');
 
 	$("#paramCount").val(0);
 	$("#newBMRModal").modal('show');
+	$("#group_type").val(type);
 	$("#queryparameterows").html('');
 	if (data != null) {
 		let data_arr = JSON.parse(atob(data));
@@ -3859,7 +3860,7 @@ function addBMR(data = null) {
 
 function addNewBMR() {
 	let name = $("#bmr_name").val();
-
+	let type = $("#group_type").val();
 	if (name != null && name != '') {
 
 		let formd = document.getElementById('BMRForm');
@@ -3869,7 +3870,11 @@ function addNewBMR() {
 			if (res.status === 200) {
 				$("#newBMRModal").modal('hide');
 				app.successToast(res.body);
-				ShowForm(204);
+				if(type == 1){
+					ShowForm(204);
+				}else{
+					ShowForm(209);
+				}
 			} else {
 				app.errorToast(res.body);
 			}
@@ -3984,8 +3989,10 @@ function removeQueryParam(rowindex) {
 }
 
 function editBMRParamDetails(id) {
+	let type = $("#groupPageType").val();
 	let formdata = new FormData();
 	formdata.set('id', id);
+	formdata.set('type', type);
 	app.request("getBMRParamData", formdata).then(res => {
 		if (res.status === 200) {
 			let data = res.data;

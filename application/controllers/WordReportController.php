@@ -66,12 +66,11 @@ class WordReportController extends CI_Controller
 		$update_id = $this->input->post('update_id');
 		$type = $this->input->post('type');
 		$template_id = 1;
-		// $result = $this->createTableDynamic($page_name,$bmr_no);
 
 		if ($type == 1) {
 			$tableName = 'word_reportMaker_table';
 		} else {
-			$tableName = 'production_scheduler_bmr_report';
+			$tableName = 'child_group_master';
 		}
 		$id = '';
 		if ($html_obj != null && $html_obj != '') {
@@ -161,7 +160,7 @@ class WordReportController extends CI_Controller
 			if ($type == 1) {
 				$resultObject = $this->MasterModel->_select('word_reportMaker_table', array('id' => $id), '*', false);
 			} else {
-				$resultObject = $this->MasterModel->_select('production_scheduler_bmr_report', array('id' => $id), '*', false);
+				$resultObject = $this->MasterModel->_select('child_group_master', array('id' => $id), '*', false);
 			}
 
 			if ($resultObject->totalCount > 0) {
@@ -215,7 +214,7 @@ class WordReportController extends CI_Controller
 			if ($type == 1) {
 				$resultObject = $this->MasterModel->_select('word_reportMaker_table', array('id' => $id), '*');
 			} else {
-				$resultObject = $this->MasterModel->_select('production_scheduler_bmr_report', array('id' => $id), '*');
+				$resultObject = $this->MasterModel->_select('child_group_master', array('id' => $id), '*');
 			}
 			if ($resultObject->totalCount > 0) {
 
@@ -250,7 +249,7 @@ class WordReportController extends CI_Controller
 			if ($type == 1) {
 				$tablename = 'word_reportMaker_table';
 			} else {
-				$tablename = 'production_scheduler_bmr_report';
+				$tablename = 'child_group_master';
 			}
 			$resultObject = $this->MasterModel->_select($tablename, array('id' => $id), '*');
 			if ($resultObject->totalCount > 0) {
@@ -286,7 +285,7 @@ class WordReportController extends CI_Controller
 				if ($type == 1) {
 					$tablename = 'word_reportMaker_table';
 				} else {
-					$tablename = 'production_scheduler_bmr_report';
+					$tablename = 'child_group_master';
 				}
 //				$page_input=explode(',',$page_input);
 				$resultObject = $this->MasterModel->_select($tablename, array('id' => $report_id), '*');
@@ -305,6 +304,7 @@ class WordReportController extends CI_Controller
 						$page_input = $onePage->keys;
 //						$systemTable = $onePage->tablename;
 						$keyPairs = $onePage->keyPairs;
+
 						$isconfig = $onePage->is_config;
 						$pageDataSetarray = array();
 						$pageDataSet = array();
@@ -452,7 +452,7 @@ class WordReportController extends CI_Controller
 		$processChart = '';
 		$table = 'word_reportMaker_table';
 		if ($type == 2) {
-			$table = 'production_scheduler_bmr_report';
+			$table = 'child_group_master';
 		} else {
 			$table = 'word_reportMaker_table';
 
@@ -661,20 +661,36 @@ class WordReportController extends CI_Controller
 		$query_param_type = $this->input->post('parameter_type');
 		$query_param_value = $this->input->post('param_value');
 		$bmr_list = $this->input->post('bmr_list');
+		$group_type = $this->input->post('group_type');
 		$insert_array = array();
 		$param_data = array();
 		$bmr_id = '';
+
+		if($group_type == 2){
+			if($bmr_list == null && $bmr_list == ''){
+				$response['status'] = 201;
+				$response['body'] = "Select Group";
+				echo json_encode($response);
+				exit();
+			}
+		}
+
 		if ($name != null && $name != '') {
 			if ($id != null && $id != '') {
-				$insert = $this->MasterModel->_update('word_reportMaker_table',
 
-					array('name' => $name, 'created_by' => $this->session->user_session->id), array('id' => $id));
-				$bmr_id = $id;
+				if($group_type == 1){
+					$insert = $this->MasterModel->_update('word_reportMaker_table',
+						array('name' => $name, 'created_by' => $this->session->user_session->id), array('id' => $id));
+					$bmr_id = $id;
+				}else{
+					$insert = $this->MasterModel->_update('child_group_master',
+						array('name' => $name, 'created_by' => $this->session->user_session->id), array('id' => $id));
+					$bmr_id = $id;
+				}
 			} else {
 				$bmrdata = array(
 					'name' => $name,
 					'created_by' => $this->session->user_session->id
-
 				);
 				if ($bmr_list != -1) {
 					$bmrcode = $this->MasterModel->_select('word_reportMaker_table', array('id' => $bmr_list), 'code');
@@ -682,12 +698,19 @@ class WordReportController extends CI_Controller
 						$bmrdata['code'] = $bmrcode->data->code;
 					}
 				}
-				$insert = $this->MasterModel->_insert('word_reportMaker_table', $bmrdata);
-				$bmr_id = $insert->inserted_id;
 
-				$result = $this->createTableDynamic($name, $query_param, $bmr_id);
-
-				$updateName = $this->MasterModel->_update('word_reportMaker_table', array('table_name' => $result), array('id' => $bmr_id));
+				if($group_type == 1){
+					$insert = $this->MasterModel->_insert('word_reportMaker_table', $bmrdata);
+					$bmr_id = $insert->inserted_id;
+					$result = $this->createTableDynamic($name, $query_param, $bmr_id);
+					$updateName = $this->MasterModel->_update('word_reportMaker_table', array('table_name' => $result), array('id' => $bmr_id));
+				}else{
+					$bmrdata['g_id'] = $bmr_list;
+					$insert = $this->MasterModel->_insert('child_group_master', $bmrdata);
+					$bmr_id = $insert->inserted_id;
+					$result = $this->createTableDynamic($name, $query_param, $bmr_id);
+					$updateName = $this->MasterModel->_update('word_reportMaker_table', array('table_name' => $result), array('id' => $bmr_id));
+				}
 			}
 			foreach ($query_param as $i => $val) {
 				$data = array(
@@ -700,8 +723,14 @@ class WordReportController extends CI_Controller
 			}
 
 			if (count($insert_array)) {
-				$this->MasterModel->_delete('group_parameter_mapping', array('group_id' => $bmr_id));
-				$insert = $this->MasterModel->_insertBatch('group_parameter_mapping', $insert_array);
+				if($group_type == 1){
+					$this->MasterModel->_delete('group_parameter_mapping', array('group_id' => $bmr_id));
+					$insert = $this->MasterModel->_insertBatch('group_parameter_mapping', $insert_array);
+				}else{
+					$this->MasterModel->_delete('child_group_parameter_mapping', array('group_id' => $bmr_id));
+					$insert = $this->MasterModel->_insertBatch('child_group_parameter_mapping', $insert_array);
+				}
+
 			}
 
 			if ($insert->status) {
@@ -1213,7 +1242,7 @@ class WordReportController extends CI_Controller
 		$materialTable = '';
 		$table = 'word_reportMaker_table';
 		if ($type == 2) {
-			$table = 'production_scheduler_bmr_report';
+			$table = 'child_group_master';
 			$result = $this->historyDesign($id, $type);
 		} else {
 			$table = 'word_reportMaker_table';
@@ -1423,7 +1452,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 
 					}
 				} else {
-					$getData = $this->MasterModel->_select('production_scheduler_bmr_report', array('id' => $bmr_id), '*');
+					$getData = $this->MasterModel->_select('child_group_master', array('id' => $bmr_id), '*');
 					if ($getData->totalCount > 0) {
 						$pageData = $getData->data;
 						$pages = json_decode($pageData->code);
@@ -1624,7 +1653,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 			if ($type == 1) {
 				$tablename = 'word_reportMaker_table';
 			} else {
-				$tablename = 'production_scheduler_bmr_report';
+				$tablename = 'child_group_master';
 			}
 			$resultObject = $this->MasterModel->_select($tablename, array('id' => $id), '*');
 			if ($resultObject->totalCount > 0) {
@@ -1675,9 +1704,14 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 	public function getBMRParamData()
 	{
 		$id = $this->input->post('id');
+		$type = $this->input->post('type');
 		if ($id != null && $id != '') {
 
-			$getData = $this->MasterModel->_select('group_parameter_mapping', array('group_id' => $id), '*', false);
+			$table = 'group_parameter_mapping';
+			if($type == 2){
+				$table = 'child_group_parameter_mapping';
+			}
+			$getData = $this->MasterModel->_select($table, array('group_id' => $id), '*', false);
 			if ($getData->totalCount > 0) {
 				$response['status'] = 200;
 				$response['body'] = "Data Found";
@@ -1702,7 +1736,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 			$params = array();
 			$table = 'group_parameter_mapping';
 			if ($type == 2) {
-				$table = 'production_group_parameter_mapping';
+				$table = 'child_group_parameter_mapping';
 			}
 			$getParams = $this->MasterModel->_select($table, array('group_id' => $id), '*', false);
 			if ($getParams->totalCount > 0) {
@@ -1804,7 +1838,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 				}
 			}
 		} else {
-			$getPageData = $this->MasterModel->_select('production_scheduler_bmr_report', array('id' => $group_id), '*', true);
+			$getPageData = $this->MasterModel->_select('child_group_master', array('id' => $group_id), '*', true);
 			if ($getPageData->totalCount > 0) {
 				$row = $getPageData->data;
 
@@ -1842,7 +1876,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 				}
 			}
 		} else {
-			$getPageData = $this->MasterModel->_select('production_scheduler_bmr_report', array('id' => $page_id), '*', true);
+			$getPageData = $this->MasterModel->_select('child_group_master', array('id' => $page_id), '*', true);
 			if ($getPageData->totalCount > 0) {
 				$row = $getPageData->data;
 
@@ -1850,7 +1884,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 				$html_data = json_decode($html_code);
 				if ($html_data != null) {
 					foreach ($html_data[0]->pages as $p) {
-						$pagelabellist[] = $p->page_id;
+						$pagelabellist[] = $p->page_id . '-' . $p->page_name;
 					}
 				}
 			}
@@ -1865,7 +1899,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 
 			$table = 'word_reportMaker_table';
 			if ($type == 2) {
-				$table = "production_scheduler_bmr_report";
+				$table = "child_group_master";
 			}
 			$getGroupData = $this->MasterModel->_select($table, array('status' => 1), '*', false);
 			if ($getGroupData->totalCount > 0) {
@@ -1887,5 +1921,9 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 			$response['body'] = "Required Parameter Missing";
 		}
 		echo json_encode($response);
+	}
+
+	public function ChildGroup(){
+		$this->load->view('WordReport/ChildGroup',array('title' => 'Child Group'));
 	}
 }
