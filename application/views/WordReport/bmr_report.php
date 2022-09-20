@@ -43,16 +43,16 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 			<h1>BMR Report</h1>
 			<input type="hidden" name="bmr_no" id="bmr_no" value="<?=$id?>">
 
-			<?php if($type == 1) { ?>
-			<div style="margin-left: 684px">
-				<button class="btn btn-primary btn-sm" type="button" onclick="addMaterial()">Add Material</button>
-			</div>
-			<?php  } ?>
-			<?php if($type == 1) { ?>
-			<div style="margin-left: 15px">
-				<button class="btn btn-primary btn-sm" type="button" onclick="addProcess()">Add Process</button>
-			</div>
-			<?php  } ?>
+<!--			--><?php //if($type == 1) { ?>
+<!--			<div style="margin-left: 684px">-->
+<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addMaterial()">Add Material</button>-->
+<!--			</div>-->
+<!--			--><?php // } ?>
+<!--			--><?php //if($type == 1) { ?>
+<!--			<div style="margin-left: 15px">-->
+<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addProcess()">Add Process</button>-->
+<!--			</div>-->
+<!--			--><?php // } ?>
 			<div style="margin-left: auto">
 				<button class="btn btn-primary btn-sm" type="button" onclick="addNewPage()">Add Page</button>
 			</div>
@@ -82,16 +82,16 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 									<div class="col-4">
 										<div class="form-group">
 
-											<?php if($type==1){ ?>
-												<label>Page Type</label>
-											<select name="page_type" id="page_type" class="form-control">
-												<option value="-1">Select One</option>
-												<option value="1">Product</option>
-												<option value="2">Production</option>
-											</select>
-											<?php } else { ?>
-												<input type="hidden" id="page_type" name="page_type" value="2">
-											<?php } ?>
+<!--											--><?php //if($type==1){ ?>
+<!--												<label>Page Type</label>-->
+<!--											<select name="page_type" id="page_type" class="form-control">-->
+<!--												<option value="-1">Select One</option>-->
+<!--												<option value="1">Product</option>-->
+<!--												<option value="2">Production</option>-->
+<!--											</select>-->
+<!--											--><?php //} else { ?>
+<!--												<input type="hidden" id="page_type" name="page_type" value="2">-->
+<!--											--><?php //} ?>
 										</div>
 									</div>
 									<div class="col-2">
@@ -124,12 +124,12 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 									<a class="nav-link" id="question-tab" data-toggle="tab" href="#questionTab"
 									   role="tab" aria-controls="question" aria-selected="true">Questions</a>
 								</li>
-								<?php if($type==1){ ?>
-								<li class="nav-item">
-									<a class="nav-link" id="fields-tab" data-toggle="tab" href="#fieldsTab"
-									   role="tab" aria-controls="fields" aria-selected="true">Fields</a>
-								</li>
-								<?php } ?>
+<!--								--><?php //if($type==1){ ?>
+<!--								<li class="nav-item">-->
+<!--									<a class="nav-link" id="fields-tab" data-toggle="tab" href="#fieldsTab"-->
+<!--									   role="tab" aria-controls="fields" aria-selected="true">Fields</a>-->
+<!--								</li>-->
+<!--								--><?php //} ?>
 
 							</ul>
 							<div class="tab-content" id="myTabContent">
