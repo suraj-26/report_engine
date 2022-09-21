@@ -462,19 +462,14 @@ class WordReportController extends CI_Controller
 
 		$finalhtml = '';
 
-		$finalhtml = $this->allBMRReports($id, $type);
-
-		header("Content-Type: application/vnd.ms-word");
-		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");//no-cache
-		header("content-disposition: attachment;filename=" . $bmr_name . ".doc");
-
-		$fhtml = $this->allBMRReports($id, $type);
+//		$finalhtml = $this->allBMRReports($id, $type);
 //		header("Content-Type: application/vnd.ms-word");
 //		header("Expires: 0");
 //		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");//no-cache
 //		header("content-disposition: attachment;filename=" . $bmr_name . ".doc");
-//
+
+		$fhtml = $this->allBMRReports($id, $type);
+
 		$finalhtml .= "<html>";
 		$finalhtml .= "<style>
 						table{margin:0px;width:100%;max-width: 750px;}
