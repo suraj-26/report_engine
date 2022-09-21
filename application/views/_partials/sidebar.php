@@ -49,28 +49,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<a class="nav-link"
 				   href="<?php echo base_url("admin/view_departments"); ?>">
 					<i class="fas fa-users-cog"></i>
-					<span>Engine 01</span>
+					<span>Reliance Engine</span>
 				</a>
 			</li>
 
 			<li class="<?php echo $this->uri->segment(1) == 'template_list' ? 'active' : ''; ?>">
 				<a class="nav-link" href="<?php echo base_url(); ?>template_list">
 					<i class="fas fa-users-cog"></i>
-					<span>Engine 02</span>
+					<span>Dynamic Engine</span>
 				</a>
 			</li>
 
 			<li class="<?php echo $this->uri->segment(2) == '204' ? 'active' : ''; ?>">
 				<a class="nav-link" href="<?php echo base_url(); ?>viewForm/204">
 					<i class="fas fa-users-cog"></i>
-					<span>Engine 03</span>
+					<span>Template Engine</span>
 				</a>
 			</li>
 
 			<li class="<?php echo $this->uri->segment(2) == '209' ? 'active' : ''; ?>">
 				<a class="nav-link" href="<?php echo base_url(); ?>viewForm/209">
 					<i class="fas fa-users-cog"></i>
-					<span>Child Group</span>
+					<span>Template Child Group</span>
 				</a>
 			</li>
 		</ul>

@@ -165,7 +165,7 @@ function handson(data, columnsS, hiddenColumn) {
 		colHeaders: [
 			"Keys",
 			"Control Type",
-			"Attribute Value",
+			"Default Value",
 			"Access Control",
 			"Formula",
 			"Status",
@@ -272,7 +272,7 @@ function getKeyPairs(type = null) {
 	let hiddenColumn = [];
 	let columns = [
 		{type: 'text'},
-		{type: 'dropdown', source: ['text', 'number', 'date','file','table', 'dropdown', 'calculated','checkbox']},
+		{type: 'dropdown', source: ['text','label','number', 'date','file','table', 'dropdown', 'calculated','checkbox']},
 		{type: 'text'},
 		{type: 'dropdown', source: users},
 		{type: 'text'},
@@ -387,7 +387,7 @@ function setKeyPairs(data) {
 	let hiddenColumn = [];
 	let columns = [
 		{type: 'text'},
-		{type: 'dropdown', source: ['text', 'number', 'date','file','table', 'dropdown', 'calculated','checkbox']},
+		{type: 'dropdown', source: ['text', 'label','number', 'date','file','table', 'dropdown', 'calculated','checkbox']},
 		{type: 'text'},
 		{type: 'dropdown', source: users},
 		{type: 'text'},
@@ -412,7 +412,7 @@ function addNewPage() {
 
 	let columns = [
 		{type: 'text'},
-		{type: 'dropdown', source: ['text', 'number', 'date','file','table', 'dropdown', 'calculated','checkbox']},
+		{type: 'dropdown', source: ['text','label','number', 'date','file','table', 'dropdown', 'calculated','checkbox']},
 		{type: 'text'},
 		{type: 'dropdown', source: users},
 		{type: 'text'},
