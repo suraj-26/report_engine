@@ -137,6 +137,21 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 								"html": `<input type="text" name="${inp[0]}" ${onchange} id="${inp[0]}" value="${inputValue}" ${readOnly} placeholder="Fill Field" class="form-control">`
 							});
 							break;
+						case "label":
+
+							if (inp[2].includes('select') && inp[2] !== '' && inp[2] !== null) {
+								inputValue = await getColumnNames(inp[2], inputValue, page_id, 1);
+							}
+
+							if (inp[2].includes('#') && inp[2] !== '' && inp[2] !== null && !inp[2].includes('select')) {
+								inputValue = await getParamValue(inp[2]);
+							}
+
+							keyPairInputArr.push({
+								"key": inp[0],
+								"html": `<span id="${inp[0]}">${inputValue}</span>`
+							});
+							break;
 						case "number":
 
 							if (inp[2].includes('select') && inp[2] !== '' && inp[2] !== null) {
