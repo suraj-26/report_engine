@@ -53,9 +53,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</a>
 			</li>
 
-			<li class="<?php echo $this->uri->segment(2) == 'view_departments' ? 'active' : ''; ?>">
+			<li class="<?php echo $this->uri->segment(1) == 'Reports_query' ? 'active' : ''; ?>">
 				<a class="nav-link"
-				   href="<?php echo base_url("admin/view_departments"); ?>">
+				   href="<?php echo base_url("Reports_query"); ?>">
 					<i class="fas fa-users-cog"></i>
 					<span>Report Engine</span>
 				</a>
