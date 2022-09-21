@@ -15,44 +15,44 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 	.main-content {
 		padding-left: 0px !important;
 	}
-	.inputText
-	{
-		background-color: yellow!important;
+
+	.inputText {
+		background-color: yellow !important;
 	}
-	.editorDiv
-	{
+
+	.editorDiv {
 		height: 70vh;
 		overflow-y: auto;
 	}
-	iframe
-	{
+
+	iframe {
 		padding: 2px;
-		width: 210mm!important;
-		border: 1px solid!important;
+		width: 210mm !important;
+		border: 1px solid !important;
 		margin: 1rem auto;
 	}
 
 	@media (min-width: 992px)
-	#addmaterialmodal {
-		max-width: 80%!important;
-	}
+		#addmaterialmodal {
+			max-width: 80% !important;
+		}
 </style>
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
 			<h1>BMR Report</h1>
-			<input type="hidden" name="bmr_no" id="bmr_no" value="<?=$id?>">
+			<input type="hidden" name="bmr_no" id="bmr_no" value="<?= $id ?>">
 
-<!--			--><?php //if($type == 1) { ?>
-<!--			<div style="margin-left: 684px">-->
-<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addMaterial()">Add Material</button>-->
-<!--			</div>-->
-<!--			--><?php // } ?>
-<!--			--><?php //if($type == 1) { ?>
-<!--			<div style="margin-left: 15px">-->
-<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addProcess()">Add Process</button>-->
-<!--			</div>-->
-<!--			--><?php // } ?>
+			<!--			--><?php //if($type == 1) { ?>
+			<!--			<div style="margin-left: 684px">-->
+			<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addMaterial()">Add Material</button>-->
+			<!--			</div>-->
+			<!--			--><?php // } ?>
+			<!--			--><?php //if($type == 1) { ?>
+			<!--			<div style="margin-left: 15px">-->
+			<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addProcess()">Add Process</button>-->
+			<!--			</div>-->
+			<!--			--><?php // } ?>
 			<div style="margin-left: auto">
 				<button class="btn btn-primary btn-sm" type="button" onclick="addNewPage()">Add Page</button>
 			</div>
@@ -72,8 +72,8 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 										<input type="text" class="form-control" name="section_name" id="section_name"
 											   data-valid="required"
 											   data-msg="Enter page name"/>
-										<input type="hidden" name="update_id" id="update_id" value="<?=$id?>"/>
-										<input type="hidden" name="type" id="type" value="<?=$type?>"/>
+										<input type="hidden" name="update_id" id="update_id" value="<?= $id ?>"/>
+										<input type="hidden" name="type" id="type" value="<?= $type ?>"/>
 										<input type="hidden" name="page_id" id="page_id"/>
 										<input type="hidden" name="template_id" id="template_id"/>
 										<input type="hidden" name="elementCount" id="elementCount" value="0"/>
@@ -82,20 +82,22 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 									<div class="col-4">
 										<div class="form-group">
 
-<!--											--><?php //if($type==1){ ?>
-<!--												<label>Page Type</label>-->
-<!--											<select name="page_type" id="page_type" class="form-control">-->
-<!--												<option value="-1">Select One</option>-->
-<!--												<option value="1">Product</option>-->
-<!--												<option value="2">Production</option>-->
-<!--											</select>-->
-<!--											--><?php //} else { ?>
-<!--												<input type="hidden" id="page_type" name="page_type" value="2">-->
-<!--											--><?php //} ?>
+											<!--											--><?php //if($type==1){ ?>
+											<!--												<label>Page Type</label>-->
+											<!--											<select name="page_type" id="page_type" class="form-control">-->
+											<!--												<option value="-1">Select One</option>-->
+											<!--												<option value="1">Product</option>-->
+											<!--												<option value="2">Production</option>-->
+											<!--											</select>-->
+											<!--											--><?php //} else { ?>
+											<!--												<input type="hidden" id="page_type" name="page_type" value="2">-->
+											<!--											--><?php //} ?>
 										</div>
 									</div>
 									<div class="col-2">
-										<button class="btn btn-primary mr-1" type="button" onclick="saveHtml()" id="templateFornBtn" style="margin-top: 30px;">Submit</button>
+										<button class="btn btn-primary mr-1" type="button" onclick="saveHtml()"
+												id="templateFornBtn" style="margin-top: 30px;">Submit
+										</button>
 										<!-- <button class="btn btn-secondary" type="reset">Reset</button> -->
 									</div>
 								</div>
@@ -124,21 +126,21 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 									<a class="nav-link" id="question-tab" data-toggle="tab" href="#questionTab"
 									   role="tab" aria-controls="question" aria-selected="true">Questions</a>
 								</li>
-<!--								--><?php //if($type==1){ ?>
-<!--								<li class="nav-item">-->
-<!--									<a class="nav-link" id="fields-tab" data-toggle="tab" href="#fieldsTab"-->
-<!--									   role="tab" aria-controls="fields" aria-selected="true">Fields</a>-->
-<!--								</li>-->
-<!--								--><?php //} ?>
+								<!--								--><?php //if($type==1){ ?>
+								<!--								<li class="nav-item">-->
+								<!--									<a class="nav-link" id="fields-tab" data-toggle="tab" href="#fieldsTab"-->
+								<!--									   role="tab" aria-controls="fields" aria-selected="true">Fields</a>-->
+								<!--								</li>-->
+								<!--								--><?php //} ?>
 
 							</ul>
 							<div class="tab-content" id="myTabContent">
 								<div class="tab-pane fade" id="questionTab" role="tabpanel"
 									 aria-labelledby="question-tab">
 
-										<button onclick="setTextBoxCode(1)">
-											<i class="fas fa-font"></i> Textbox
-										</button>
+									<button onclick="setTextBoxCode(1)">
+										<i class="fas fa-font"></i> Textbox
+									</button>
 
 
 								</div>
@@ -211,19 +213,16 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 					<div class="card">
 						<div id="isconfigure" style="margin: 20px;">
 							<input type="checkbox" name="is_config" id="is_config" value="true">&nbsp;IsConfigurable
-
 						</div>
-<!--						<div class="col-md-9">-->
-<!--							<label>Select Table</label>-->
-<!--							<select name="query_table" onchange="getTableName(this.value)" id="alltablename" class="form-control select2"></select>-->
-<!--							<input type="hidden" name="table_name" id="table_name" value="">-->
-<!--						</div>-->
-
 
 						<div class="card-header">
 							<h4>Input Configuration</h4>
+<!--							<div style="margin-left: auto">-->
+<!--								<button class="btn btn-primary" type="button" onclick="openKeypair()">Configure</button>-->
+<!--							</div>-->
 						</div>
 						<div class="card-body">
+
 							<div id="keyPairsDiv">
 
 							</div>
@@ -241,19 +240,29 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 </div>
 
 
-<?php $this->load->view('_partials/footer'); ?>
+<?php
+$this->load->view('pageConfiguration/inventoryFormModal');
+$this->load->view('_partials/footer');
+?>
 
 <script type="text/javascript">
-getAllTablesNames();
+	getAllTablesNames();
 	$(document).ready(function () {
 		app.formValidation();
 	});
-	function getAllTablesNames() {
-	app.request("getAllTablesNames", null).then(res => {
-		$("#alltablename").html('');
-		$("#alltablename").html(res.option);
-		$("#alltablename").select2();
 
-	}).catch(error => console.log(error));
-}
+	function getAllTablesNames() {
+		app.request("getAllTablesNames", null).then(res => {
+			$("#alltablename").html('');
+			$("#alltablename").html(res.option);
+			$("#alltablename").select2();
+
+		}).catch(error => console.log(error));
+	}
+
+	// function openKeypair() {
+	// 	$("#keyPairModal").modal('show');
+	// 	getKeyPairs();
+	// }
+
 </script>
