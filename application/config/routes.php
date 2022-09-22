@@ -190,3 +190,8 @@ $route['getQueryParamData']='WordReportController/getQueryParamData';
 $route['getGroupsList']='WordReportController/getGroupsList';
 $route['getAwsLinkToDownload']='WordReportController/getAwsLinkToDownload';
 $route['ChildGroup']='WordReportController/ChildGroup';
+
+
+//report
+$route["Reports_query"]="Report/Reports_query";
+$route["ReportView"]="Report/report_view";

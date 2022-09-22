@@ -16,8 +16,7 @@ class Report extends HexaController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("MedicineOrderModel");
-		$this->load->model("Assignbed_model");
+		$this->load->model("MasterModel");
 	}
 
 	public function Reports_query()
@@ -25,6 +24,10 @@ class Report extends HexaController
 		$this->load->view('Report/view_reports', array("title" => "Reports"));
 	}
 
+	public function report_view()
+	{
+		$this->load->view('ReportView/dashboard', array("title" => "Reports"));
+	}
 	public function get_user_report()
 	{
 		$this->load->model('LabReport');
@@ -337,8 +340,7 @@ class Report extends HexaController
 				}
 			}
 			$data .= ' <br><div style="float:right"><button type="button" class="btn btn-primary" onclick="ShowData()">Show Report</button>
-          <button type="button" class="btn btn-primary"onclick="DownloadData()">Download Excel Report</button>
-          <button type="button" class="btn btn-primary"onclick="DownloadPDFData()">Download PDF Report</button>
+          <button type="button" class="btn btn-primary"onclick="DownloadData()">Download Report</button>
 		  </div>
 		  </form><br>';
 
@@ -355,14 +357,14 @@ class Report extends HexaController
 	{
 		$id = $this->input->post('query_id');
 		$branch_id = $this->session->user_session->branch_id;
-		$patient_table = $this->session->user_session->patient_table;
+//		$patient_table = $this->session->user_session->patient_table;
 		$query = $this->db->query("select * from query_reports_table where id=" . $id);
 		if ($this->db->affected_rows() > 0) {
 			$result = $query->row();
 			$query_val = $result->query;
 			$is_dataTable = $result->display_type;
 			$branchiDV = "#branch_id";
-			$patient_tableV = '"#patient_table"';
+//			$patient_tableV = '"#patient_table"';
 			for ($i = 1; $i <= 5; $i++) {
 				$ParamV = "param" . $i;
 				$param = $result->$ParamV;
@@ -375,7 +377,7 @@ class Report extends HexaController
 			}
 
 			$query_val = str_replace($branchiDV, $branch_id, $query_val);
-			$query_val = str_replace($patient_tableV, $patient_table, $query_val);
+//			$query_val = str_replace($patient_tableV, $patient_table, $query_val);
 
 			$array_head = array();
 			$array_data = array();
@@ -462,7 +464,7 @@ class Report extends HexaController
 
 		$id = $object->query_id;
 		$branch_id = $this->session->user_session->branch_id;
-		$patient_table = $this->session->user_session->patient_table;
+//		$patient_table = $this->session->user_session->patient_table;
 		$this->load->library('excel');
 		//$listInfo = $this->export->exportList();
 		$objPHPExcel = new PHPExcel();
@@ -487,7 +489,7 @@ class Report extends HexaController
 			$branchiDV = "#branch_id";
 			$patient_tableV = '"#patient_table"';
 			$query_val = str_replace($branchiDV, $branch_id, $query_val);
-			$query_val = str_replace($patient_tableV, $patient_table, $query_val);
+//			$query_val = str_replace($patient_tableV, $patient_table, $query_val);
 			$array_head = array();
 
 			$query_new = $this->db->query($query_val);
@@ -547,10 +549,10 @@ class Report extends HexaController
 		$column_order = array('reoprt_name');
 		$column_search = array('reoprt_name', "sub_report_name");
 
-		$memData = $this->MedicineOrderModel->getRows($_POST, $where, $select, $tableName, $column_search, $column_order, $order, $group_by);
+		$memData = $this->MasterModel->getRows($_POST, $where, $select, $tableName, $column_search, $column_order, $order, $group_by);
 
-		$filterCount = $this->MedicineOrderModel->countFiltered($_POST, $tableName, $where, $column_search, $column_order, $order);
-		$totalCount = $this->MedicineOrderModel->countAll($tableName, $where);
+		$filterCount = $this->MasterModel->countFiltered($_POST, $tableName, $where, $column_search, $column_order, $order);
+		$totalCount = $this->MasterModel->countAll($tableName, $where);
 		//	echo $this->db->last_query();
 		if (count($memData) > 0) {
 			$tableRows = array();
