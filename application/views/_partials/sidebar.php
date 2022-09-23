@@ -60,6 +60,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<span>Report Engine</span>
 				</a>
 			</li>
+			<li class="<?php echo $this->uri->segment(1) == 'ReportView' ? 'active' : ''; ?>">
+				<a class="nav-link"
+				   href="<?php echo base_url("ReportView"); ?>">
+					<i class="fas fa-users-cog"></i>
+					<span>Report View</span>
+				</a>
+			</li>
 
 			<li class="<?php echo $this->uri->segment(1) == 'template_list' ? 'active' : ''; ?>">
 				<a class="nav-link" href="<?php echo base_url(); ?>template_list">

@@ -141,6 +141,13 @@ if($this->uri->segment(1) == "materialOrder"){ ?>
 	<script src="<?= base_url(); ?>assets/modules/richText/wordReportCreation.js"></script>
 <?php } ?>
 
+<?php  if ($this->uri->segment(1) == "ReportView") { ?>
+	<script src="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/modules/select2/dist/js/select2.full.min.js"></script>
+<?php } ?>
+
 <?php if ($this->uri->segment(1) == 'admin') { ?>
 	<script type="text/javascript">
 		var base_url = "<?php echo base_url(); ?>";
