@@ -42,23 +42,13 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 		<div class="section-header">
 			<h1>BMR Report</h1>
 			<input type="hidden" name="bmr_no" id="bmr_no" value="<?= $id ?>">
-
-			<!--			--><?php //if($type == 1) { ?>
-			<!--			<div style="margin-left: 684px">-->
-			<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addMaterial()">Add Material</button>-->
-			<!--			</div>-->
-			<!--			--><?php // } ?>
-			<!--			--><?php //if($type == 1) { ?>
-			<!--			<div style="margin-left: 15px">-->
-			<!--				<button class="btn btn-primary btn-sm" type="button" onclick="addProcess()">Add Process</button>-->
-			<!--			</div>-->
-			<!--			--><?php // } ?>
 			<div style="margin-left: auto">
-				<button class="btn btn-primary btn-sm" type="button" onclick="addNewPage()">Add Page</button>
+				<button class="btn btn-primary btn-sm" type="button" id="backBtn" style="display: none" onclick="BtnHideShow(2)"><i class="fa fa-arrow-left"></i>&nbsp;Back</button>
+				<button class="btn btn-primary btn-sm" type="button" id="PageBtn" onclick="addNewPage()">Add Page</button>
 			</div>
 		</div>
 		<div class="section-body">
-			<div class="row">
+			<div class="row" id="GroupPageDiv">
 				<div class="col-12 col-md-8 col-lg-8">
 					<div class="card">
 						<form id="page_form" method="post" data-form-valid="saveHtml">
@@ -109,9 +99,9 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 								</div>
 
 							</div>
-
 						</form>
 					</div>
+
 				</div>
 				<div class="col-12 col-md-4 col-lg-4">
 					<div class="card">
@@ -211,17 +201,28 @@ $this->load->view('pageConfiguration/inventoryFormModal');
 
 
 					<div class="card">
-						<div id="isconfigure" style="margin: 20px;">
-							<input type="checkbox" name="is_config" id="is_config" value="true">&nbsp;IsConfigurable
-						</div>
-
 						<div class="card-header">
 							<h4>Input Configuration</h4>
-<!--							<div style="margin-left: auto">-->
-<!--								<button class="btn btn-primary" type="button" onclick="openKeypair()">Configure</button>-->
-<!--							</div>-->
 						</div>
 						<div class="card-body">
+							<button class="btn btn-primary btn-sm" type="button" id="KPBtn" onclick="BtnHideShow(1)">KeyPair Config</button>
+						</div>
+					</div>
+
+				</div>
+			</div aside>
+
+			<div class="row" id="KeyPairsDiv" style="display: none">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<div class="card">
+						<div class="card-header">
+							<h4>Input Configuration</h4>
+						</div>
+						<div class="card-body">
+
+							<div id="isconfigure" style="margin: 20px;">
+								<input type="checkbox" name="is_config" id="is_config" value="true">&nbsp;IsConfigurable
+							</div>
 
 							<div id="keyPairsDiv">
 
@@ -260,9 +261,19 @@ $this->load->view('_partials/footer');
 		}).catch(error => console.log(error));
 	}
 
-	// function openKeypair() {
-	// 	$("#keyPairModal").modal('show');
-	// 	getKeyPairs();
-	// }
-
+	function BtnHideShow(type) {
+		if(type == 1){
+			$("#backBtn").show();
+			$("#KPBtn").hide();
+			$("#PageBtn").hide();
+			$("#KeyPairsDiv").show();
+			$("#GroupPageDiv").hide();
+		}else{
+			$("#backBtn").hide();
+			$("#KPBtn").show();
+			$("#PageBtn").show();
+			$("#KeyPairsDiv").hide();
+			$("#GroupPageDiv").show();
+		}
+	}
 </script>
