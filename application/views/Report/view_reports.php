@@ -22,7 +22,7 @@ $this->load->view('_partials/header');
 			<div class="card-body">
 			<button class="btn btn-primary" onclick="toggle_div();reset_Form()" style="float:right"><i class="fa fa-plus"></i></button><br>
 			
-<div class="" id="query_data"style="display:none">
+<div class="" id="query_data" style="display:none">
 			
 			</div>
 			
