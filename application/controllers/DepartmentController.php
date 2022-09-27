@@ -68,7 +68,8 @@ class DepartmentController extends CI_Controller
 					$row->create_on,
 					$row->create_by,
 					$row->id,
-					$row->is_admin
+					$row->is_admin,
+					urlencode(base64_encode($row->id))
 				);
 			}
 			$results = array(
@@ -288,6 +289,5 @@ class DepartmentController extends CI_Controller
 		}
 		echo json_encode($response);
 	}
-
 
 }
