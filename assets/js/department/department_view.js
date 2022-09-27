@@ -91,6 +91,7 @@ function loadDepartment(type = 1, companyId = null) {
                                          >
                                  			 <i class="fab fa-wpforms"></i>
                             			 </button>
+                            			 <a href="${base_url}form_view/${aData[8]}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                             `);
 	});
 }
@@ -193,7 +194,7 @@ function getCompanyDepartment(companyId) {
 function get_DepartmentDataById(depId) {
 	$.LoadingOverlay("show");
 	serverRequest(baseURL + "getDepartmentDataById", {depId: depId}).then(response => {
-        
+
 		$.LoadingOverlay("hide");
 		if (response.status === 200) {
 			var user_data = response.body;
