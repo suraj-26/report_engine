@@ -926,6 +926,7 @@
 													<option value="1">Static</option>
 													<option value="2">Session</option>
 													<option value="3">Query</option>
+													<option value="4">URL</option>
 												</select>
 											</div>
 										</div>

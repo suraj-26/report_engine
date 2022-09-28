@@ -49,7 +49,7 @@ async function showPage(indexId, pageId) {
 			}
 			if (object) {
 				let page = object;
-				let pageInput = await changeInputTextToHTML(page.keyPairs, page.dataset, page.keys, page.page_id, page.page_type, page.staticFields);
+				let pageInput = await changeInputTextToHTML(page.keyPairs, page.dataset, page.keys, page.page_id, page.is_config, page.page_type, page.staticFields);
 				let pageCode = page.html_code;
 
 
@@ -69,7 +69,7 @@ async function showPage(indexId, pageId) {
 	}
 }
 
-async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type = 2, static_field = null) {
+async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, is_config = false, page_type = 2, static_field = null) {
 	let user_id = $("#user_id").val();
 	let usertype = $("#type").val();
 	let keyPairValue = getInputFilledValue(dataset, keys);
@@ -132,6 +132,10 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 								inputValue = await getParamValue(inp[2]);
 							}
 
+							if (is_config === true) {
+								inputValue = '';
+							}
+
 							keyPairInputArr.push({
 								"key": inp[0],
 								"html": `<input type="text" name="${inp[0]}" ${onchange} id="${inp[0]}" value="${inputValue}" ${readOnly} placeholder="Fill Field" class="form-control">`
@@ -145,6 +149,10 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 
 							if (inp[2].includes('#') && inp[2] !== '' && inp[2] !== null && !inp[2].includes('select')) {
 								inputValue = await getParamValue(inp[2]);
+							}
+
+							if (is_config === true) {
+								inputValue = '';
 							}
 
 							keyPairInputArr.push({
@@ -162,6 +170,10 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 								inputValue = await getParamValue(inp[2]);
 							}
 
+							if (is_config === true) {
+								inputValue = '';
+							}
+
 							keyPairInputArr.push({
 								"key": inp[0],
 								"html": `<input type="number" name="${inp[0]}" ${onchange} id="${inp[0]}" value="${inputValue}" ${readOnly} placeholder="Fill Field" class="form-control">`
@@ -175,6 +187,10 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 
 							if (inp[2].includes('#') && inp[2] !== '' && inp[2] !== null && !inp[2].includes('select')) {
 								inputValue = await getParamValue(inp[2]);
+							}
+
+							if (is_config === true) {
+								inputValue = '';
 							}
 
 							keyPairInputArr.push({
@@ -193,6 +209,10 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 										filesAng += `<a class="btn btn-link" href="${e.urlPath}" download><i class="fa fa-download"></i> ${e.filename}</a> `;
 									});
 								}
+							}
+
+							if (is_config === true) {
+								inputValue = '';
 							}
 							keyPairInputArr.push({
 								"key": inp[0],
@@ -233,6 +253,10 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 										if (inputValue == e) {
 											selected = "selected";
 										}
+
+										if (is_config === true) {
+											selected = '';
+										}
 										options += `<option ${selected} value="${e}">${e}</option>`;
 									});
 								}
@@ -243,6 +267,11 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 							});
 							break;
 						case "calculated":
+
+							if (is_config === true) {
+								inputValue = '';
+							}
+
 							keyPairInputArr.push({
 								"key": inp[0],
 								"html": `<input type="text" name="${inp[0]}" id="${inp[0]}" value="${inputValue}" ${readOnly} placeholder="Fill Field" class="form-control">`
@@ -257,6 +286,9 @@ async function changeInputTextToHTML(keyPairs, dataset, keys, page_id, page_type
 									let selected = '';
 									if (checkboxInputArr.includes(e)) {
 										selected = "checked";
+									}
+									if (is_config === true) {
+										selected = '';
 									}
 									checkboxes += `&nbsp;&nbsp;&nbsp;<input type="checkbox" name="${inp[0]}[]" id="${inp[0] + indexC}" ${selected} value="${e}" ${readOnly} placeholder="Write here..." class="form_control mr-1">${e}`;
 								});
@@ -477,9 +509,18 @@ function getPageLabelDataShow(grouplist, pagelist, pagecontrol) {
 		let formdata = new FormData();
 		formdata.set('bmr_id', group_id);
 		formdata.set('type', type);
+
 		app.request("getReportPageData", formdata).then(res => {
 			if (res.status === 200) {
 				let pdata = res.body.code;
+
+				var url = $(location).attr('href').split(base_url).join('').split('/');
+				let product_id = '';
+				if (url.length === 4) {
+					product_id = parseInt(url[3]);
+				}
+
+
 				pdata = JSON.parse(pdata);
 				let pageCont = pdata[0].pages;
 				pagelist = pagelist.split('-');
@@ -494,15 +535,25 @@ function getPageLabelDataShow(grouplist, pagelist, pagecontrol) {
 						});
 
 						let dataset = r.dataset;
-						dataset.map(r => {
-							r.map(e => {
-								for (let k in e) {
-									if (k === inputValue) {
-										datavalue = e[k].value;
+						for (let i = 0; i < dataset.length; i++) {
+							dataset[i].map(r => {
+								if (product_id !== '') {
+									if (dataset[i][dataset[i].length - 1].product_id.value === product_id) {
+										for (let k in r) {
+											if (k === inputValue) {
+												datavalue = r[k].value;
+											}
+										}
+									}
+								} else {
+									for (let k in r) {
+										if (k === inputValue) {
+											datavalue = r[k].value;
+										}
 									}
 								}
-							})
-						});
+							});
+						}
 					}
 				});
 				resolve(datavalue);
@@ -514,11 +565,11 @@ function getPageLabelDataShow(grouplist, pagelist, pagecontrol) {
 function getQueryParam() {
 	let id = $("#report_id").val();
 	let type = $("#type").val();
-
-
+	var url = $(location).attr('href').split(base_url).join('').split('/');
 	let formdata = new FormData();
 	formdata.set('id', id);
 	formdata.set('type', type);
+	formdata.set('url', url);
 	app.request("getQueryParamData", formdata).then(res => {
 		if (res.status === 200) {
 			$("#queryParameters").val('');

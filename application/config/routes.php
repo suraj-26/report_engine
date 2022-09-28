@@ -159,6 +159,7 @@ $route['userProfiles']='WordReportController/userProfiles';
 $route['getPagesList']='WordReportController/getWordReportMakerData';
 $route['getPageDataToEditor']='WordReportController/getPageDataToEditor';
 $route['bmr_report_view/(:any)/(:any)']='WordReportController/bmr_report_view/$1/$2';
+$route['bmr_report_view/(:any)/(:any)/(:any)']='WordReportController/bmr_report_view/$1/$2/$3';
 $route['getReportData']='WordReportController/getReportData';
 $route['saveReportPageData']='WordReportController/saveReportPageData';
 $route['bmrReport/(:any)/(:any)']='WordReportController/bmrReport/$1/$2';

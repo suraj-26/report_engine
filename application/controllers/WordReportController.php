@@ -331,7 +331,6 @@ class WordReportController extends CI_Controller
 											}
 										}
 									}
-
 									$inputAccess = array();
 									$inputAccess[$row] = array('value' => $inputValue, 'users' => $user_id, 'date' => date('Y-m-d'));
 									array_push($pageDataSet, $inputAccess);
@@ -341,84 +340,29 @@ class WordReportController extends CI_Controller
 								$systemArr[$kp[4]] = $this->input->post($kp[0]);
 							}
 						}
+						if($type == 2 && $page_id == 1 && $report_id == 1){
+							$pageDataSet[]['product_id'] = array('value' => time(), 'users' => $user_id, 'date' => date('Y-m-d'));
+						}
 						if (!property_exists($onePage, 'dataset')) {
 							$onePage->dataset = array();
 						}
-						array_push($pageDataSetarray, $pageDataSet);
 						if ($isconfig == 'true') {
-							foreach ($pageDataSetarray as $pageDataSet) {
-								array_push($pageDataSetarray, $pageDataSet);
-							}
-
-							$onePage->dataset = $pageDataSetarray;
-
-
+							array_push($onePage->dataset,$pageDataSet);
 						} else {
-							$onePage->dataset = $pageDataSetarray;
-
-						}
-						$pageDataArr = $pageDataSet;
-						if ($pageType == 1) {
-							$page_type = $pageType;
-
-							$insert_array = array(
-								'reference_mfr_no' => $this->input->post('reference_mfr_no'),
-								'generic_name' => $this->input->post('generic_name'),
-								'composition' => $this->input->post('composition'),
-								'description' => $this->input->post('description'),
-								'mfg_lic_no' => $this->input->post('mfg_lic_no'),
-								'shelf_life' => $this->input->post('shelf_life'),
-								'product_code' => $this->input->post('product_code'),
-								'branch_id' => $this->session->user_session->branch_id
-							);
-
-							if ($type == 1) {
-								$productDetails = $this->MasterModel->_select('product_master_table', array('bmr_id' => $report_id), '*');
-								if ($productDetails->totalCount > 0) {
-									$product_id = $productDetails->data->id;
-								}
-							}
+							$onePage->dataset = $pageDataSet;
 						}
 					}
-					if ($type == 1) {
-						$getTableName = $this->MasterModel->_select('word_reportMaker_table', array('id' => $report_id), 'table_name', true);
-
-						if ($getTableName->totalCount > 0) {
-							$table_name = $getTableName->data->table_name;
-
-							$getPageData = $this->MasterModel->_select($table_name, array('bmr_id' => $report_id, 'page_id' => $page_id), '*', true);
-
-							if ($getPageData->totalCount > 0) {
-								$updateData = $this->MasterModel->_update($table_name, array('dataset' => json_encode($pageDataArr)), array('bmr_id' => $report_id, 'page_id' => $page_id));
-
-							}
-						}
-					}
-
-
 					$pagedatanew = json_encode($data);
-
 
 					$update = new stdClass();
 					$update->status = false;
 
-					if ($page_type == 1) {
-						if ($type == 1) {
-							if ($product_id != 0) {
-								$update = $this->MasterModel->_update('product_master_table', $insert_array, array('id' => $product_id));
-							} else {
-								$insert_array['bmr_id'] = $report_id;
-								$update = $this->MasterModel->_insert('product_master_table', $insert_array);
-							}
-						}
-					}
 					$update = $this->MasterModel->_update($tablename, array('code' => $pagedatanew), array('id' => $report_id));
 
 					if (count($systemArr) > 0) {
 						if ($systemTable != '') {
 							$this->MasterModel->_insert($systemTable, $systemArr);
 						}
-
 					}
 
 					if ($update->status) {
@@ -1726,6 +1670,8 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 	{
 		$id = $this->input->post('id');
 		$type = $this->input->post('type');
+		$url = $this->input->post('url');
+		$url = explode(',',$url);
 		if ($id != null && $id != '') {
 
 			$params = array();
@@ -1743,7 +1689,7 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 					} else if ($row->param_type == 2) {
 						$session_name = $row->param_value;
 						$params[$row->param_name] = $this->session->user_session->$session_name;
-					} else {
+					} else if($row->param_type == 3){
 						$query = $row->param_value;
 						if (strpos($query, '#id')) {
 							$query = str_replace('#id', $id, $query);
@@ -1754,7 +1700,12 @@ production_schedule_id=(select scheduler_id from production_scheduler_bmr_report
 						} else {
 							$params[$row->param_name] = '';
 						}
-
+					}else{
+						if(!empty($url[$row->param_value])){
+							$params[$row->param_name] = $url[$row->param_value];
+						}else{
+							$params[$row->param_name] = '';
+						}
 					}
 				}
 				$response['status'] = 200;
