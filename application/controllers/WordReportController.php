@@ -341,7 +341,24 @@ class WordReportController extends CI_Controller
 							}
 						}
 						if($type == 2 && $page_id == 1 && $report_id == 1){
-							$pageDataSet[]['product_id'] = array('value' => time(), 'users' => $user_id, 'date' => date('Y-m-d'));
+
+							$product_array = array(
+								'reference_mfr_no' => $this->input->post('Input1'),
+								'generic_name' => $this->input->post('Input2'),
+								'composition' => $this->input->post('Input3'),
+								'description' => $this->input->post('Input4'),
+								'mfg_lic_no' => $this->input->post('Input5'),
+								'shelf_life' => $this->input->post('Input6'),
+								'product_code' => $this->input->post('Input7')
+							);
+
+							$product_insert = $this->MasterModel->_insert('product_master_table',$product_array);
+							$p_id = time();
+							if($product_insert->status){
+								$p_id = $product_insert->inserted_id;
+							}
+
+							$pageDataSet[]['product_id'] = array('value' => $p_id, 'users' => $user_id, 'date' => date('Y-m-d'));
 						}
 						if (!property_exists($onePage, 'dataset')) {
 							$onePage->dataset = array();

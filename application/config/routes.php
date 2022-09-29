@@ -196,3 +196,8 @@ $route['ChildGroup']='WordReportController/ChildGroup';
 //report
 $route["Reports_query"]="Report/Reports_query";
 $route["ReportView"]="Report/report_view";
+
+
+//Pages
+$route['product'] = 'Pages/index';
+$route['getProductDetails'] = 'Pages/getProductDetails';
