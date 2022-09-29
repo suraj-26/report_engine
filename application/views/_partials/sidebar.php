@@ -88,6 +88,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<span>Template Child Group</span>
 				</a>
 			</li>
+
+			<li class="<?php echo $this->uri->segment(1) == 'product' ? 'active' : ''; ?>">
+				<a class="nav-link" href="<?php echo base_url(); ?>product">
+					<i class="fas fa-users-cog"></i>
+					<span>Products</span>
+				</a>
+			</li>
 		</ul>
 	</aside>
 </div>
